@@ -17,8 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('kithen_structure.urls')),  # заміни на свою app'у, якщо назва інша
-    path('accounts/', include('django.contrib.auth.urls')),  # 👈 Додай це
+    path('admin/', admin.site.urls),  # Панель адміністратора
+    path('', include('kitchen_structure.urls')),  # Включаємо URL-і додатку kitchen_structure
+    path('accounts/', include('django.contrib.auth.urls')),  # Стандартні URL-и для аутентифікації користувачів
 ]

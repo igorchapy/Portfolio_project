@@ -1,9 +1,8 @@
 from pathlib import Path
 
-
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print(BASE_DIR)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'your-secret-key-here'
 
@@ -20,7 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap5',  # додано bootstrap5
-    'kithen_structure',  # ваш додаток
+    'kitchen_structure',  # ваш додаток
 ]
 
 MIDDLEWARE = [
@@ -35,11 +34,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'kitchen_project.urls'
 
+WSGI_APPLICATION = 'kitchen_project.wsgi.application'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # if you want a global templates folder
-        'APP_DIRS': True,
+        'DIRS': [
+            BASE_DIR / 'templates',  # Переконайтесь, що тут вказано правильний шлях
+        ],
+        'APP_DIRS': True,  # Це дозволяє Django автоматично шукати шаблони в кожному додатку
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -50,9 +53,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'kitchen_project.wsgi.application'
-
 # Database
 DATABASES = {
     'default': {
@@ -86,7 +86,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom user model
-AUTH_USER_MODEL = 'kithen_structure.Cook'
+AUTH_USER_MODEL = "kitchen_structure.Cook"
 
 # Login
 LOGIN_REDIRECT_URL = '/'

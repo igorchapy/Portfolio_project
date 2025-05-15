@@ -1,10 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Компанія "Lviv Foods"{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Заголовок з анімацією -->
+    <div class="text-center mb-5 fade-in">
+        <h1 class="text-center display-5 fw-bold mb-5 text-success animate__animated animate__fadeInDown">Про компанію "Lviv Foods"</h1>
+        <p class="lead text-muted" style="font-family: 'Lora', serif;">
+            Заснована у 2023 році, наша компанія поєднує в собі естетику, витонченість та смак у кожному аспекті роботи.
+        </p>
+    </div>
+
+    <!-- Основний контент з анімацією -->
+    <div class="row mb-5">
+        <div class="col-md-6 fade-in" style="text-align: justify;">
+            <h3 class="fw-semibold text-secondary" style="font-family: 'Montserrat', sans-serif;">Наша історія</h3>
+            <p>
+                Ми розпочали як невеличкий ресторан, що з часом перетворився на місце, де гастрономія стає мистецтвом.
+                Ми постійно впроваджуємо нові технології та методи, щоб зробити роботу наших працівників комфортною,
+                безпечною та приємною.
+            </p>
+        </div>
+        <div class="col-md-6 fade-in">
+            <h3 class="fw-semibold text-secondary" style="font-family: 'Montserrat', sans-serif;">Можливості для працівників</h3>
+            <p>
+                Ми відкриваємо двері для талановитих людей у різних професіях:
+                <strong>кухар</strong>, <strong>касир</strong>, <strong>прибиральник</strong>, <strong>менеджер</strong>.
+                Наша мета — підтримка команди, справедливість та комфортні умови праці.
+            </p>
+        </div>
+    </div>
+
+    <!-- Контент про комфорт -->
+    <div class="bg-light p-4 rounded shadow-sm fade-in" style="border-left: 5px solid #28a745;">
+        <h4 class="mb-3 text-success" style="font-family: 'Poppins', sans-serif;">Ми створюємо комфорт для кожного</h4>
+        <p class="text-muted">
+            У нас ви знайдете не лише роботу, а й можливість розвиватися, підтримувати творчість та взаємодіяти в дружньому колективі.
+        </p>
+    </div>
+</div>
+
+<style>
+    .fade-in {
+        animation: fadeIn 1.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .container {
+        max-width: 1200px;
+    }
+
+    .display-4 {
+        font-size: 3rem;
+        color: #343a40;
+    }
+
+    .fw-bold {
+        font-weight: 700;
+    }
+
+    .lead {
+        font-size: 1.25rem;
+        color: #6c757d;
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+
+    .text-success {
+        color: #28a745 !important;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+
+    .rounded {
+        border-radius: 10px;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    h3, h4 {
+        font-family: 'Montserrat', sans-serif;
+        color: #343a40;
+    }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+{% endblock %}

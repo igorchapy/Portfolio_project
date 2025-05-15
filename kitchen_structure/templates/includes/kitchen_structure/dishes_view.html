@@ -1,10 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Страви{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Форма додавання страви -->
+    <form method="POST" action="{{ request.path }}" class="p-4 rounded-4 shadow-sm bg-light border">
+        {% csrf_token %}
+        <h4 class="mb-4 fw-bold text-success">Додати страву</h4>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="dish_name" class="form-label">Назва</label>
+                <input type="text" class="form-control form-control-lg" id="dish_name" name="name" placeholder="Наприклад, Борщ" required>
+            </div>
+            <div class="col-md-6">
+                <label for="dish_type" class="form-label">Тип страви</label>
+                <input type="text" class="form-control form-control-lg" id="dish_type" name="dish_type" placeholder="Наприклад, Суп" required>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="dish_description" class="form-label">Опис</label>
+            <input type="text" class="form-control form-control-lg" id="dish_description" name="description" placeholder="Короткий опис страви" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="dish_recipe" class="form-label">Рецепт</label>
+            <textarea class="form-control form-control-lg" id="dish_recipe" name="recipe" rows="4" placeholder="Покроковий рецепт" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg w-100 rounded-pill shadow-sm">
+            <i class="fas fa-plus-circle me-2"></i>Додати страву
+        </button>
+    </form>
+
+    <!-- Таблиця страв -->
+    <div class="mt-5">
+        <h4 class="fw-bold text-secondary mb-3">Список страв</h4>
+
+        {% if dishes %}
+        <div class="table-responsive shadow-sm rounded-4">
+            <table class="table table-striped table-bordered align-middle mb-0 bg-white">
+                <thead class="table-success text-center">
+                    <tr>
+                        <th scope="col" style="width: 50px;">#</th>
+                        <th scope="col">Назва</th>
+                        <th scope="col">Тип страви</th>
+                        <th scope="col">Опис</th>
+                        <th scope="col">Рецепт</th>
+                        <th scope="col" style="width: 130px;">Дія</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dish in dishes %}
+                    <tr>
+                        <th scope="row" class="text-center">{{ forloop.counter }}</th>
+                        <td>{{ dish.name }}</td>
+                        <td>{{ dish.dish_type.name }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td style="white-space: pre-wrap; max-width: 350px;">{{ dish.recipe }}</td>
+                        <td class="text-center">
+                            <form method="POST" action="{% url 'kitchen_structure:delete_dish' dish.id %}" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill"
+                                        onclick="return confirm('Ви впевнені, що хочете видалити цю страву?');">
+                                    <i class="fas fa-trash-alt"></i> Видалити
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info mt-3" role="alert">
+            Страв ще немає.
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}

@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Головна - Кухня Онлайн{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+    <!-- Заголовок -->
+    <header class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-success animate__animated animate__fadeInDown">
+            Ласкаво просимо до нашої онлайн-кухні!
+        </h1>
+        <p class="lead text-muted mt-3 animate__animated animate__fadeInUp animate__delay-1s">
+            Наш сайт створений для зручного керування стравами, інгредієнтами та командою кухарів.
+        </p>
+    </header>
+
+    <!-- Опис можливостей -->
+    <section class="text-center mb-5 animate__animated animate__fadeIn animate__delay-2s">
+        <p class="text-muted fs-5">Ось основні можливості, які чекають на вас:</p>
+    </section>
+
+    <!-- Можливості -->
+    <section class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-lg rounded-4 animate__animated animate__zoomIn">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success fs-4">🧆 Список страв</h5>
+                    <p class="card-text text-muted">Переглядайте, додавайте та редагуйте смачні рецепти для вашої кухні.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-lg rounded-4 animate__animated animate__zoomIn animate__delay-1s">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-warning fs-4">🥦 Інгредієнти</h5>
+                    <p class="card-text text-muted">Керуйте запасами інгредієнтів, додавайте нові та оновлюйте наявні.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-lg rounded-4 animate__animated animate__zoomIn animate__delay-2s">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-info fs-4">👨‍🍳 Кухарі</h5>
+                    <p class="card-text text-muted">Слідкуйте за командою кухарів, призначайте завдання та керуйте процесами.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Завершення -->
+    <footer class="text-center mt-5 animate__animated animate__fadeInUp animate__delay-3s">
+        <p class="text-muted">Інтерфейс розроблено для максимальної зручності та ефективності у використанні.</p>
+    </footer>
+</main>
+{% endblock %}

@@ -1,150 +1,113 @@
-from django.urls import reverse_lazy
-from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
-
-from .models import Dish, DishType, Cook, Ingredient
-from django.contrib.auth.models import User
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
+from .models import Dish, Cook, Ingredient, DishType
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpRequest
 from .forms import DishForm
 
 
-# Головна сторінка
+User = get_user_model()
+
+# --- Головна сторінка ---
 def home(request):
-    return HttpResponse("Welcome to the Kitchen App!")
+    dishes = Dish.objects.all()
+    return render(request, 'includes/kitchen_structure/head_page.html', {'dishes': dishes})
 
 
-# Створення та відображення списку страв
-def dish_list_and_create(request):
-    # Отримуємо страви та типи страв з бази даних
+# --- Сторінка страв ---
+def dishes_view(request):
     dishes = Dish.objects.all()
     dish_types = DishType.objects.all()
-    selected_type_id = request.GET.get('dish_type')  # Отримуємо вибраний тип страви з параметрів запиту
 
-    # Обробка форми при POST-запиті
     if request.method == 'POST':
         form = DishForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('kitchen:dish-list')  # Перенаправлення на список страв після збереження
+            return redirect('kitchen_structure:dishes_view')
     else:
         form = DishForm()
 
-    # Повертаємо шаблон з контекстом
     context = {
-        'dishes': dishes,
         'form': form,
+        'dishes': dishes,
         'dish_types': dish_types,
-        'selected_type_id': selected_type_id
     }
-
-    return render(request, 'kithen/dish_list_and_create.html', context)
-
-# Список страв
-class DishListView(ListView):
-    model = Dish
-    template_name = 'kithen_structure/dish_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["form"] = DishForm()  # Додаємо форму на список страв
-        return context
-
-    def post(self, request, *args, **kwargs):
-        form = DishForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('kitchen:dish-list')  # Перенаправляємо на список страв
-        context = self.get_context_data()
-        context["form"] = form  # Додаємо помилки форми, якщо вона не валідна
-        return self.render_to_response(context)
+    return render(request, 'includes/kitchen_structure/dishes_view.html', context)
 
 
-# Страва: Деталі
-class DishDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Dish
-    template_name = "kithen_structure/dish_detail.html"
+# --- Видалення страви ---
+def delete_dish(request, dish_id):
+    dish = get_object_or_404(Dish, id=dish_id)
+    if request.method == 'POST':
+        dish.delete()
+        return redirect('kitchen_structure:dishes_view')
+    return render(request, 'includes/kitchen_structure/delete_dish.html', {'dish': dish})
 
 
-# Страва: Створення
-class DishCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Dish
-    form_class = Dish
-    success_url = reverse_lazy("kitchen:dish-list")
-    template_name = "kithen_structure/dish_form.html"
+# --- Сторінка кухарів ---
+def chef_list(request):
+    chefs = User.objects.filter(is_superuser=True)
+    context = {
+        'chefs': chefs,
+        'chefs_message': None if chefs.exists() else 'Немає суперкухарів для відображення.'
+    }
+    return render(request, 'includes/kitchen_structure/chefs_list.html', context)
 
 
-# Страва: Оновлення
-class DishUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Dish
-    form_class = Dish
-    success_url = reverse_lazy("kitchen:dish-list")
-    template_name = "kithen_structure/dish_form.html"
+# --- Сторінка "Про компанію" ---
+def about_view(request):
+    return render(request, 'includes/kitchen_structure/about_company.html')
 
 
-# Страва: Видалення
-class DishDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Dish
-    success_url = reverse_lazy("kitchen:dish-list")
-    template_name = "kithen_structure/dish_confirm_delete.html"
+# --- Інгредієнти ---
+@csrf_exempt
+def ingredients_view(request: HttpRequest):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        quantity = request.POST.get('quantity')
+        if name and quantity:
+            Ingredient.objects.create(name=name, quantity=quantity)
+        return redirect('kitchen_structure:ingredients_view')
+
+    ingredients = Ingredient.objects.all()
+    return render(request, 'includes/kitchen_structure/ingredients_view.html', {'ingredients': ingredients})
 
 
-# Список типів страв
-class DishTypeListView(LoginRequiredMixin, generic.ListView):
-    model = DishType
-    template_name = "kithen_structure/dishtype_list.html"
+@csrf_exempt
+def delete_ingredient(request, pk):
+    ingredient = get_object_or_404(Ingredient, pk=pk)
+    if request.method == 'POST':
+        ingredient.delete()
+        return redirect('kitchen_structure:ingredients_view')
+    return render(request, 'includes/kitchen_structure/delete_ingredient.html', {'ingredient': ingredient})
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['additional_data'] = 'some value'  # Приклад додавання додаткових даних
-        return context
+def add_dish(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        dish_type_name = request.POST.get('dish_type')
+        description = request.POST.get('description')
+        recipe = request.POST.get('recipe')
 
+        if not (name and dish_type_name and description and recipe):
+            # Повертаємо з помилкою, якщо щось не заповнено
+            return render(request, 'includes/kitchen_structure/dishes_view.html', {
+                'dishes': Dish.objects.all(),
+                'dish_types': DishType.objects.all(),
+                'error': 'Будь ласка, заповніть усі поля.'
+            })
 
-# Створення типу страви
-class DishTypeCreateView(LoginRequiredMixin, generic.CreateView):
-    model = DishType
-    fields = "__all__"
-    success_url = reverse_lazy("kitchen:dishtype-list")
-    template_name = "kithen_structure/dishtype_form.html"
+        # Отримуємо або створюємо DishType
+        dish_type, created = DishType.objects.get_or_create(name=dish_type_name)
 
+        # Створюємо страву
+        Dish.objects.create(
+            name=name,
+            dish_type=dish_type,
+            description=description,
+            recipe=recipe
+        )
 
-# Список кухарів
-class CookListView(LoginRequiredMixin, generic.ListView):
-    model = Cook
-    template_name = "kithen_structure/cook_list.html"
+        return redirect('kitchen_structure:dishes')
 
-
-# Деталі кухаря
-class CookDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Cook
-    template_name = "kithen_structure/cook_detail.html"
-
-
-# Список користувачів
-class UserListView(LoginRequiredMixin, ListView):
-    model = User
-    template_name = 'kithen_structure/user_list.html'
-    context_object_name = 'users'
-
-
-# Деталі користувача
-class UserDetailView(LoginRequiredMixin, DetailView):
-    model = User
-    template_name = 'kithen_structure/user_detail.html'
-    context_object_name = 'user'
-
-
-# Створення інгредієнта
-class IngredientCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Ingredient
-    fields = "__all__"
-    success_url = reverse_lazy("kitchen:ingredient-list")
-    template_name = "kithen_structure/ingredient_form.html"
-
-
-# Список інгредієнтів
-class IngredientListView(LoginRequiredMixin, ListView):
-    model = Ingredient
-    template_name = "kithen_structure/ingredient_list.html"
-    context_object_name = "object_list"  # Це ім'я змінної, яку використовує шаблон
+    # Якщо GET — перенаправляємо
+    return redirect('kitchen_structure:dishes')

@@ -1,0 +1,124 @@
+body {
+    font-family: 'Roboto', sans-serif; /* Сучасний шрифт для всіх елементів */
+    background-color: #F4F4F4; /* Світлий фон для чистоти і контрасту */
+    margin: 0;
+    padding: 0;
+}
+
+.welcome-heading {
+    font-size: 66px;
+    font-family: 'Poppins', sans-serif;
+    color: #005BBB; /* Синій колір для заголовка */
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.welcome-heading:hover {
+    color: #005BBB;
+    transform: none;
+}
+
+.welcome-description {
+    font-size: 22px;
+    font-family: 'Open Sans', sans-serif;
+    color: #333; /* Темний текст для кращої контрастності */
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+}
+
+button {
+    background-color: #FFCC00; /* Жовтий для кнопок (національний колір) */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+button:hover {
+    background-color: #FFB800; /* Темніший жовтий при наведенні */
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:focus {
+    outline: none;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px;
+}
+
+.sidebar {
+    width: 350px;
+    background-color: #005BBB; /* Синій колір для бічної панелі */
+    color: white;
+    padding: 2rem;
+    position: fixed;
+    height: 100%;
+    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease;
+}
+
+.sidebar:hover {
+    width: 300px;
+}
+
+.sidebar h4 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #FFD700; /* Золотий колір для заголовка */
+    font-weight: 500;
+}
+
+.sidebar .nav-item {
+    margin-bottom: 20px;
+}
+
+.sidebar .nav-link {
+    color: #ecf0f1;
+    font-size: 1.2rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #34495e;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.sidebar .nav-link i {
+    font-size: 1.6rem;
+    margin-right: 10px;
+}

@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Видалити страву{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-danger">Видалити страву</h2>
+    <p>Ви впевнені, що хочете видалити страву <strong>{{ dish.name }}</strong> (тип: {{ dish.type.name }})?</p>
+
+    <div class="mb-3">
+        <strong>Опис:</strong>
+        <p>{{ dish.description|linebreaks }}</p>
+
+        <strong>Рецепт:</strong>
+        <p>{{ dish.recipe|linebreaks }}</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Так, видалити</button>
+        <a href="{% url 'add_dish' %}" class="btn btn-secondary ms-2">Скасувати</a>
+    </form>
+</div>
+{% endblock %}

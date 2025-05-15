@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Кухарі - Lviv Foods{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <header class="mb-5 text-center">
+        <h1 class="display-5 text-success fw-bold animate__animated animate__fadeInDown">
+            Наша команда кухарів
+        </h1>
+        <p class="lead text-muted">
+    <i class="fas fa-user-friends me-2 text-success"></i>
+    Наша команда кухарів — це згуртований колектив, який разом творить кулінарне мистецтво на найвищому рівні.
+        </p>
+    </header>
+
+    {% if chefs %}
+        <div class="row g-4">
+            {% for chef in chefs %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card shadow-sm h-100 border-0 animate__animated animate__fadeInUp">
+                        <div class="card-body d-flex flex-column">
+                            <!-- Chef Number and Name -->
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="badge bg-success me-3 fs-6 d-flex align-items-center">
+                                    <i class="fas fa-utensils me-2"></i> №{{ forloop.counter }}
+                                </span>
+                                <h5 class="card-title text-success fw-semibold mb-0">{{ chef.get_full_name }}</h5>
+                            </div>
+
+                            <!-- Chef Details -->
+                            <ul class="list-group list-group-flush text-muted mb-3 flex-grow-1">
+                                <li class="list-group-item">
+                                    <i class="fas fa-user me-2 text-primary"></i>
+                                    <strong>Username:</strong> {{ chef.username }}
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-envelope me-2 text-danger"></i>
+                                    <strong>Email:</strong> {{ chef.email }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center fs-5 mt-4">
+            Наразі немає кухарів у базі даних.
+        </div>
+    {% endif %}
+</div>
+
+<!-- Font Awesome CDN -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}

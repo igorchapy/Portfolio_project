@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Видалити страву{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card shadow rounded-4 p-4">
+        <h2 class="mb-4 text-danger">Підтвердження видалення</h2>
+        <p>Ви дійсно хочете видалити страву: <strong>{{ dish.name }}</strong>?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Так, видалити</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary ms-2">Скасувати</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
