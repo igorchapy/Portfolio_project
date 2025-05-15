@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Інгредієнти{% endblock %}
+
+{% block content %}
+<form method="POST" action="{% url 'kitchen_structure:ingridients_view' %}" class="p-4 rounded shadow-sm bg-white">
+    {% csrf_token %}
+    <h5 class="mb-4 fw-semibold text-primary">Додати новий інгредієнт</h5>
+
+    <div class="mb-3">
+        <label for="name" class="form-label fw-semibold">Назва інгредієнта</label>
+        <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Наприклад, Морква" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="quantity" class="form-label fw-semibold">Кількість</label>
+        <input type="text" class="form-control form-control-lg" id="quantity" name="quantity" placeholder="Наприклад, 500 г" required>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-lg w-100 mt-3 shadow-sm" style="border-radius: 100px;">
+        <i class="fas fa-plus-circle me-2"></i>Додати інгредієнт
+    </button>
+</form>
+
+<!-- Список інгредієнтів -->
+<div class="mt-5">
+    <h5 class="fw-semibold text-secondary">Список інгредієнтів</h5>
+    <ul class="list-group">
+        {% for ingredient in ingredients %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ ingredient.name }}
+                <span class="badge bg-primary rounded-pill">{{ ingredient.quantity }}</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-muted">Інгредієнтів ще немає.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
