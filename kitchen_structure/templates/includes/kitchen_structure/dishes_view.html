@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container py-5">
-    <!-- Форма додавання страви -->
+    <!-- Add dish -->
     <form method="POST" action="{{ request.path }}" class="p-4 rounded-4 shadow-sm bg-light border">
         {% csrf_token %}
         <h4 class="mb-4 fw-bold text-success">Додати страву</h4>
@@ -35,7 +35,7 @@
         </button>
     </form>
 
-    <!-- Таблиця страв -->
+    <!-- Dish table -->
     <div class="mt-5">
         <h4 class="fw-bold text-secondary mb-3">Список страв</h4>
 

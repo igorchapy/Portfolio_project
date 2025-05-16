@@ -20,7 +20,7 @@ class Ingredient(models.Model):
 class Dish(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
-    recipe = models.TextField()  # Переконайтесь, що це поле існує
+    recipe = models.TextField()
     dish_type = models.CharField(max_length=200)
 
     def __str__(self):

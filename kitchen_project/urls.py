@@ -19,7 +19,7 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # Панель адміністратора
-    path('', include('kitchen_structure.urls')),  # Включаємо URL-і додатку kitchen_structure
-    path('accounts/', include('django.contrib.auth.urls')),  # Стандартні URL-и для аутентифікації користувачів
+    path('admin/', admin.site.urls),  # Admin
+    path('', include('kitchen_structure.urls')),  # Include the URLs of the kitchen_structure application
+    path('accounts/', include('django.contrib.auth.urls')),  # Standard URLs for user authentication
 ]

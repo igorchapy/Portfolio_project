@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container py-5">
-    <!-- Форма додавання -->
+    <!-- Form to add -->
     <form method="POST" action="{{ request.path }}" class="p-4 rounded-4 shadow-sm bg-light border">
         {% csrf_token %}
         <h4 class="mb-4 fw-bold text-success">Додати інгредієнт</h4>
@@ -25,7 +25,7 @@
         </button>
     </form>
 
-    <!-- Список інгредієнтів -->
+    <!-- List of ingredients -->
     <div class="mt-5">
         <h4 class="fw-bold text-secondary mb-3">Список інгредієнтів</h4>
 
@@ -58,7 +58,6 @@
     </div>
 </div>
 
-<!-- Вбудований CSS -->
 <style>
     ul.custom-list {
         padding: 0;
@@ -66,6 +65,5 @@
     }
 </style>
 
-<!-- Font Awesome CDN (обов'язково) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 {% endblock %}

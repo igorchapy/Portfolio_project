@@ -9,14 +9,14 @@ from .forms import DishForm
 User = get_user_model()
 
 
-# --- Головна сторінка ---
+# --- Home page ---
 class HomeView(ListView):
     model = Dish
     template_name = 'includes/kitchen_structure/head_page.html'
     context_object_name = 'dishes'
 
 
-# --- Сторінка страв ---
+# Dish list
 class DishListView(View):
     def get(self, request):
         dishes = Dish.objects.all()
@@ -43,7 +43,7 @@ class DishListView(View):
         })
 
 
-# --- Додавання страви через просту форму ---
+#Add dish
 class AddDishView(View):
     def post(self, request):
         name = request.POST.get('name')
@@ -71,7 +71,7 @@ class AddDishView(View):
         return redirect('kitchen_structure:dishes')
 
 
-# --- Видалення страви ---
+# Delete dish
 class DeleteDishView(DeleteView):
     model = Dish
     template_name = 'includes/kitchen_structure/delete_dish.html'
@@ -79,7 +79,7 @@ class DeleteDishView(DeleteView):
     context_object_name = 'dish'
 
 
-# --- Сторінка кухарів ---
+# Page of chefs
 class ChefListView(ListView):
     model = User
     template_name = 'includes/kitchen_structure/chefs_list.html'
@@ -95,12 +95,12 @@ class ChefListView(ListView):
         return context
 
 
-# --- Сторінка "Про компанію" ---
+#  About company
 class AboutCompanyView(TemplateView):
     template_name = 'includes/kitchen_structure/about_company.html'
 
 
-# --- Інгредієнти ---
+# Ingredients
 class IngredientListView(View):
     def get(self, request):
         ingredients = Ingredient.objects.all()

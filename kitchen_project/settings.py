@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap5',  # додано bootstrap5
+    'django_bootstrap5',  # додано bootstrap5
     'kitchen_structure',  # ваш додаток
 ]
 
@@ -40,9 +40,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates',  # Переконайтесь, що тут вказано правильний шлях
+            BASE_DIR / 'templates',
         ],
-        'APP_DIRS': True,  # Це дозволяє Django автоматично шукати шаблони в кожному додатку
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
