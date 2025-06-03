@@ -9,7 +9,7 @@ import os
 import dj_database_url
 
 # Base directory of the project
-BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 # ---------------------------------------------------------------------------
 # Core security settings
