@@ -56,7 +56,7 @@ MIDDLEWARE: list[str] = [
 ]
 
 ROOT_URLCONF: str = "kitchen_project.urls"
-WSGI_APPLICATION: str = "kitchen_project.wsgi.application"
+#WSGI_APPLICATION: str = "kitchen_project.wsgi.application"
 
 # ---------------------------------------------------------------------------
 # Templates
@@ -129,7 +129,7 @@ LOGOUT_REDIRECT_URL = "/accounts/login/"
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = False
     SECURE_HSTS_SECONDS = int(os.getenv("SECURE_HSTS_SECONDS", 3600))
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
